@@ -32,5 +32,4 @@ public class CoinCollect : MonoBehaviour
     {
         scoreText.text = "Score: " + coin.ToString();
     }
-
 }

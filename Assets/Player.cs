@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,16 +8,35 @@ public class Player : MonoBehaviour
     public int currentHealth;
 
     public HealthBar healthBar;
+    public static bool isRestarting = false;
 
     public bool isDead = false;
 
-    void Start()
-    {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
 
+void Start()
+{
+
+
+    if (GameManager.instance != null)
+    {
+        currentHealth = GameManager.instance.playerHealth;
+    }
+    else
+    {
+        Debug.LogWarning("GameManager instance is null!");
+        currentHealth = maxHealth;
     }
 
+    if (healthBar != null)
+    {
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(currentHealth);
+    }
+    else
+    {
+        Debug.LogWarning("HealthBar is not assigned in the Inspector!");
+    }
+}
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Hazard"))
@@ -31,8 +51,10 @@ public class Player : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= damage;
+        GameManager.instance.playerHealth = currentHealth;
         healthBar.SetHealth(currentHealth);
 
+        
         if (currentHealth <= 0)
         {
             PlayerKill();
@@ -43,11 +65,13 @@ public class Player : MonoBehaviour
     {
         isDead = true;
         Debug.Log("Player has died");
-         Invoke("RestartLevel", 1.5f);
+        StartCoroutine(RestartLevelCoroutine());
     }
 
-    void RestartLevel1()
-    {
+    IEnumerator RestartLevelCoroutine()
+    {   
+        isRestarting = true;
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
