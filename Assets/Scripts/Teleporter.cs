@@ -14,14 +14,14 @@ public class Teleporter : MonoBehaviour
         {
             CoinCollect coinCollect = other.GetComponent<CoinCollect>();
 
-            if (coinCollect != null && coinCollect.coin >= 12)
+            if (coinCollect != null && coinCollect.coin >= 10)
             {
                 ShowMessage("Teleporting to next scene...");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else
             {
-                ShowMessage("Not enough coins! Need 12 to teleport.");
+                ShowMessage("Not enough coins! Need 10 to teleport.");
             }
         }
     }
