@@ -8,20 +8,28 @@ public class Teleporter : MonoBehaviour
     public TextMeshProUGUI messageText;    // Reference to the Text element inside the canvas
     public float messageDuration = 2f;
 
+
+    void Start()
+    {
+        if (messageCanvas != null)
+            messageCanvas.gameObject.SetActive(false); // Hide the message panel at scene start
+    }   
+
+
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             CoinCollect coinCollect = other.GetComponent<CoinCollect>();
 
-            if (coinCollect != null && coinCollect.coin >= 12)
+            if (coinCollect != null && coinCollect.coin >= 5)
             {
                 ShowMessage("Teleporting to next scene...");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
             }
             else
             {
-                ShowMessage("Not enough coins! Need 12 to teleport.");
+                ShowMessage("Not enough coins! Need 5 to teleport.");
             }
         }
     }
