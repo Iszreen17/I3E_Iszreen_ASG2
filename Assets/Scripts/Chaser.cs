@@ -4,79 +4,90 @@ using UnityEngine.AI;
 
 public class Chaser : MonoBehaviour
 {
-    NavMeshAgent myAgent;
+    public NavMeshAgent agent;
 
-    [SerializeField]
-    Transform targetTransform;
+    public Transform player;
 
-    public string currentState;
+    public LayerMask whatIsGround, whatIsPlayer;
 
-    void Awake()
+    //Patroling
+    public Vector3 walkPoint;
+    bool walkPointSet;
+    public float walkPointRange;
+
+    //Attacking
+    public float timeBetweenAttacks;
+    bool alreadyAttacked;
+
+    //States
+    public float sightRange, attackRange;
+    public bool playerInSightRange, playerInAttackRange;
+
+    private void Awake()
     {
-        myAgent = GetComponent<NavMeshAgent>();
+        player = GameObject.Find("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
     }
 
-    void Start()
+    private void Update()
     {
-        StartCoroutine(SwitchState("Idle"));
+        //Check for sight and attack range
+        playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+        playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+
+        if (!playerInSightRange && !playerInAttackRange) Patroling();
+        if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+        if (playerInSightRange && playerInAttackRange) AttackPlayer();
     }
 
-    IEnumerator SwitchState(string newState)
+    private void Patroling()
     {
-        if (currentState == newState)
+        if (!walkPointSet) SearchWalkPoint();
+        if (walkPointSet)
+            agent.SetDestination(walkPoint);
+        Vector3 distanceToWalkPoint = transform.position - walkPoint;
+
+        //Walkpoint reached
+        if (distanceToWalkPoint.magnitude < 1f)
+            walkPointSet = false;
+    }
+
+    private void SearchWalkPoint()
+    {
+        //Calculate random point in range
+        float randomZ = Random.Range(-walkPointRange, walkPointRange);
+        float randomX = Random.Range(-walkPointRange, walkPointRange);
+
+        walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+
+        if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
         {
-            yield break; // Exit if the state is already the same
+            walkPointSet = true;
         }
-
-        currentState = newState;
-
-        StartCoroutine(currentState);
     }
 
-    IEnumerator Idle()
+    private void ChasePlayer()
     {
-        while (currentState == "Idle")
+        agent.SetDestination(player.position);
+    }
+
+    private bool AttackPlayer()
+    {
+        agent.SetDestination(transform.position);
+
+        transform.LookAt(player);
+        if (!alreadyAttacked)
         {
-            // Perform idle behavior here
-            if (targetTransform != null)
-            {
-                // If there is a target, go to the chasing state
-                StartCoroutine(SwitchState("ChaseTarget"));
-            }
-            yield return null; // Wait for the next frame
+            alreadyAttacked = true;
+
+            return true;
         }
+        return false;
     }
 
-    IEnumerator ChaseTarget()
+    private void ResetAttack()
     {
-        // while loop in a coroutine = mini Update function
-        while (currentState == "ChaseTarget")
-        {
-            // Perform chasing behavior here
-            if (targetTransform == null)
-            {
-                StartCoroutine(SwitchState("Idle"));
-            }
-            else
-            {
-                myAgent.SetDestination(targetTransform.position);
-            }
-            
-            yield return null;
-        }
+        alreadyAttacked = false;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        // If the chaser 'sees' the player, set the target to the player
-        if (other.gameObject.CompareTag("Player"))
-            targetTransform = other.transform;
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        // If the player leaves the chaser's trigger, set the target to null
-        if (other.gameObject.CompareTag("Player"))
-            targetTransform = null;
-    }
 }
