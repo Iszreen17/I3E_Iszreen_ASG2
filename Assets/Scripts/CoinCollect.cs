@@ -51,9 +51,6 @@ public class CoinCollect : MonoBehaviour
         }
     }
 
-
-
-
     IEnumerator LevelRestart() // Coroutine to handle level restart after game over
     {
         if (gameOverText != null)
