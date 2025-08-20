@@ -34,6 +34,12 @@ public class CoinCollect : MonoBehaviour
             }
             Destroy(other.gameObject);
         }
+        else if (other.CompareTag("Pill"))
+        {
+            coin += 5;
+            UpdateScoreUI();
+            Destroy(other.gameObject);
+        }
         else if (other.CompareTag("Hazard")) // Handle collision with hazards
         {
             coin = Mathf.Max(0, coin - 1);
@@ -44,6 +50,9 @@ public class CoinCollect : MonoBehaviour
             }
         }
     }
+
+
+
 
     IEnumerator LevelRestart() // Coroutine to handle level restart after game over
     {

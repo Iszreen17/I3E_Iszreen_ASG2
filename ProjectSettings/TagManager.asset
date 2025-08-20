@@ -8,6 +8,8 @@ TagManager:
   - Coin
   - Special
   - Hazard
+  - Final
+  - Pill
   layers:
   - Default
   - TransparentFX
