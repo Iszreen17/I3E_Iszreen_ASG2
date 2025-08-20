@@ -1,13 +1,19 @@
 using UnityEngine;
-using TMPro;
+
 public class TeddyBearCollect : MonoBehaviour
 {
     
     public void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-        {
-            Debug.Log("Teddy collected!");
+        {   
+            var progress = other.GetComponent<PlayerProgress>();
+            if (progress != null)
+            {
+                progress.CollectTeddy();
+            }
+
+            
             Destroy(gameObject);
         }
     }
