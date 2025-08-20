@@ -9169,15 +9169,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4100540023199315992, guid: 7b297292a7575f642945282662138f08, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 255.5
+      value: 255.92
       objectReference: {fileID: 0}
     - target: {fileID: 4100540023199315992, guid: 7b297292a7575f642945282662138f08, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 150.2
+      value: 134
       objectReference: {fileID: 0}
     - target: {fileID: 4100540023199315992, guid: 7b297292a7575f642945282662138f08, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.4
+      value: -1.82
       objectReference: {fileID: 0}
     - target: {fileID: 4100540023199315992, guid: 7b297292a7575f642945282662138f08, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9268,6 +9268,7 @@ GameObject:
   - component: {fileID: 234709023}
   - component: {fileID: 234709022}
   - component: {fileID: 234709021}
+  - component: {fileID: 234709025}
   m_Layer: 0
   m_Name: EndGamePlatform
   m_TagString: Final
@@ -9364,6 +9365,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &234709025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234709020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43d5881ac4e33114a9555aa9eb0e81fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  congratsText: {fileID: 1991870067}
 --- !u!4 &244059404 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 413218, guid: 826b6a0b570e8460990010fa615b5a2a, type: 3}
@@ -9574,18 +9588,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
       - m_Target: {fileID: 1613360399}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -9641,6 +9643,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 261622058}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
