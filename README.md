@@ -27,7 +27,7 @@ Game can only be played on Windows Operating System.
 # Limitations
 
 - Chaser couldnt work as how i wanted it to work. It was supposed to chase player before player could enter maze.
-- 
+- Congrats message did not appear after i collect my teddy bear for "special" item.
 
 
 
